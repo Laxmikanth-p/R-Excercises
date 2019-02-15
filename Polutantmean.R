@@ -6,26 +6,15 @@
 # in the 'directory' argument and returns the mean of the pollutant across all of the monitors,
 # ignoring any missing values coded as NA.
 
-Pollutantmean <- function(directory, pollutant, id = 1:332) {
-      #Set the working directory
-      setwd("/Users/lpendyala/Documents/R-Scripts/")
-      #Variable declarations
-      meanval <- 0
-      counter <- 1
-      files <- list.files(directory)
-      subsetFiles <- files[id]
-      subsetFiles1 <- subsetFiles[!is.na(subsetFiles)]
-      for (i in subsetFiles1) {
-            filepaths <- paste(directory, "/", i, sep = '')
-            data1 <- read.csv(filepaths)
-            meanval <- meanval + GetMean(data1[pollutant])
-            counter <- counter + 1
+pollutantmean <- function(directory, pollutant, id = 1:332) {
+      filenames <- list.files(directory)
+      filenames <- filenames[id]
+      filenames <- paste(directory, "//", filenames, sep = "")
+      all_data <- data.frame(Date = numeric(), sulphate = numeric(), nitrate = numeric(), ID = numeric())
+      for (i in 1:length(id)) {
+            all_data <- rbind(all_data, read.csv(filenames[i]))
       }
-      meanval / counter
+      mean(all_data[, pollutant], na.rm = T)   
 }
 
-GetMean <- function(data) {
-      bad <- is.na(data)
-      mean(data[!bad])
-}
 

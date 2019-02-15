@@ -5,7 +5,7 @@
 #requirement, then the function should return a numeric vector of length 0. A prototype of this function 
 #follows
 
-Corr <- function(directory, thresold = 0) {
+corr <- function(directory, thresold = 0) {
       #Set the working directory
       setwd("/Users/lpendyala/Documents/R-Scripts/")
       files <- list.files(directory)
